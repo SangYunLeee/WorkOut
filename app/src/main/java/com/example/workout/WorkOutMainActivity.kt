@@ -6,11 +6,17 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.example.workout.DataType.RecordOfDay
 import com.example.workout.DataType.WO_Record
 import com.example.workout.helper.Helper
+import java.time.LocalDate
 import java.util.*
+import kotlin.math.log
 
 class WorkOutMainActivity : AppCompatActivity() {
+
+    lateinit var m_today_record : RecordOfDay
+    lateinit var m_today_workout : Vector<WO_Record>
 
     var m_1_sum : Int     = 0
     var m_1_count : Int   = 0
@@ -22,7 +28,6 @@ class WorkOutMainActivity : AppCompatActivity() {
     var m_3_count : Int   = 0
 
     var m_input_number : Int = 0
-
     var m_focus_toptab : Int = 0
 
     lateinit var m_toptab_1 : TextView
@@ -47,8 +52,17 @@ class WorkOutMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setViewItemBinding()
+        setInitProperty()
         setListener()
+    }
 
+    fun setInitProperty() {
+        m_today_record = RecordOfDay(LocalDate.now(), Vector<WO_Record>())
+        var listOfType : MutableList<String> = mutableListOf("턱걸이", "푸시업", "달라기")
+        for (item in listOfType) {
+            m_today_record.listOfRecord.add(WO_Record(item, 0, 0))
+        }
+        m_today_workout = m_today_record.listOfRecord
     }
 
     fun setViewItemBinding() {
@@ -119,19 +133,10 @@ class WorkOutMainActivity : AppCompatActivity() {
         m_add_btn.setOnClickListener {
             if (0 >= m_input_number)
                 return@setOnClickListener
-            when (m_focus_toptab) {
-                0 -> {
-                    m_1_count++
-                    m_1_sum+= m_input_number
-                }
-                1 -> {
-                    m_2_count++
-                    m_2_sum+= m_input_number
-                }
-                2 -> {
-                    m_3_count++
-                    m_3_sum += m_input_number
-                }
+            var focused_item = m_today_workout[m_focus_toptab]
+            focused_item.apply {
+                cnt++
+                sum += m_input_number
             }
             m_input_number = 0
             updateViewItems()
@@ -144,23 +149,10 @@ class WorkOutMainActivity : AppCompatActivity() {
         var cnt     : Int    = 0
 
         // 포커스된 아이템에 대한 정보를 가져온다.
-        when (m_focus_toptab) {
-            0 -> {
-                avg = (m_1_sum.toDouble() / m_1_count.toDouble())
-                sum = m_1_sum
-                cnt = m_1_count
-            }
-            1 -> {
-                avg = (m_2_sum.toDouble() / m_2_count.toDouble())
-                sum = m_2_sum
-                cnt = m_2_count
-            }
-            2 -> {
-                avg = (m_3_sum.toDouble() / m_3_count.toDouble())
-                sum = m_3_sum
-                cnt = m_3_count
-            }
-        }
+        var focused_item = m_today_workout[m_focus_toptab]
+        sum = focused_item.sum
+        cnt = focused_item.cnt
+        avg = focused_item.sum.toDouble() / focused_item.cnt
 
         // 평균값을 소수점 첫째자리로 변경
         if (avg.isNaN())
