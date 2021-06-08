@@ -17,15 +17,7 @@ class WorkOutMainActivity : AppCompatActivity() {
 
     lateinit var m_today_record : RecordOfDay
     lateinit var m_today_workout : Vector<WO_Record>
-
-    var m_1_sum : Int     = 0
-    var m_1_count : Int   = 0
-
-    var m_2_sum : Int     = 0
-    var m_2_count : Int   = 0
-
-    var m_3_sum : Int     = 0
-    var m_3_count : Int   = 0
+    lateinit var m_focusedItem : WO_Record
 
     var m_input_number : Int = 0
     var m_focus_toptab : Int = 0
@@ -56,6 +48,10 @@ class WorkOutMainActivity : AppCompatActivity() {
         setListener()
     }
 
+    fun updateFocusedRecord() {
+        m_focusedItem = m_today_workout[m_focus_toptab]
+    }
+
     fun setInitProperty() {
         m_today_record = RecordOfDay(LocalDate.now(), Vector<WO_Record>())
         var listOfType : MutableList<String> = mutableListOf("턱걸이", "푸시업", "달라기")
@@ -63,6 +59,7 @@ class WorkOutMainActivity : AppCompatActivity() {
             m_today_record.listOfRecord.add(WO_Record(item, 0, 0))
         }
         m_today_workout = m_today_record.listOfRecord
+        updateFocusedRecord()
     }
 
     fun setViewItemBinding() {
@@ -86,12 +83,13 @@ class WorkOutMainActivity : AppCompatActivity() {
 
     fun setListener() {
 
-        var focus_color = ContextCompat.getColor(this, R.color._light_green)
-        var normal_color = ContextCompat.getColor(this, R.color.beige)
+        val focus_color = ContextCompat.getColor(this, R.color._light_green)
+        val normal_color = ContextCompat.getColor(this, R.color.beige)
 
     // TOP_TAB
         m_toptab_1.setOnClickListener { button ->
             m_focus_toptab = 0
+            updateFocusedRecord()
             button.setBackgroundColor(focus_color)
             m_toptab_2.setBackgroundColor(normal_color)
             m_toptab_3.setBackgroundColor(normal_color)
@@ -100,6 +98,7 @@ class WorkOutMainActivity : AppCompatActivity() {
 
         m_toptab_2.setOnClickListener { button ->
             m_focus_toptab = 1
+            updateFocusedRecord()
             button.setBackgroundColor(focus_color)
             m_toptab_1.setBackgroundColor(normal_color)
             m_toptab_3.setBackgroundColor(normal_color)
@@ -108,6 +107,7 @@ class WorkOutMainActivity : AppCompatActivity() {
 
         m_toptab_3.setOnClickListener{ button->
             m_focus_toptab = 2
+            updateFocusedRecord()
             button.setBackgroundColor(focus_color)
             m_toptab_1.setBackgroundColor(normal_color)
             m_toptab_2.setBackgroundColor(normal_color)
@@ -133,8 +133,7 @@ class WorkOutMainActivity : AppCompatActivity() {
         m_add_btn.setOnClickListener {
             if (0 >= m_input_number)
                 return@setOnClickListener
-            var focused_item = m_today_workout[m_focus_toptab]
-            focused_item.apply {
+            m_focusedItem.apply {
                 cnt++
                 sum += m_input_number
             }
@@ -149,10 +148,9 @@ class WorkOutMainActivity : AppCompatActivity() {
         var cnt     : Int    = 0
 
         // 포커스된 아이템에 대한 정보를 가져온다.
-        var focused_item = m_today_workout[m_focus_toptab]
-        sum = focused_item.sum
-        cnt = focused_item.cnt
-        avg = focused_item.sum.toDouble() / focused_item.cnt
+        sum = m_focusedItem.sum
+        cnt = m_focusedItem.cnt
+        avg = m_focusedItem.sum.toDouble() / m_focusedItem.cnt
 
         // 평균값을 소수점 첫째자리로 변경
         if (avg.isNaN())
