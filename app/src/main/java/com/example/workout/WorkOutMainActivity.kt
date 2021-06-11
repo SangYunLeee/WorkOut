@@ -1,17 +1,17 @@
 package com.example.workout
 
-import android.content.res.Resources
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.workout.DataType.RecordOfDay
 import com.example.workout.DataType.WO_Record
 import com.example.workout.helper.Helper
+import com.google.gson.Gson
 import java.time.LocalDate
 import java.util.*
-import kotlin.math.log
+
 
 class WorkOutMainActivity : AppCompatActivity() {
 
@@ -22,6 +22,8 @@ class WorkOutMainActivity : AppCompatActivity() {
     var m_input_number : Int = 0
     var m_focus_toptab : Int = 0
 
+
+    // VIEW ITEM
     lateinit var m_toptab_1 : TextView
     lateinit var m_toptab_2 : TextView
     lateinit var m_toptab_3 : TextView
@@ -39,6 +41,22 @@ class WorkOutMainActivity : AppCompatActivity() {
     lateinit var m_add_btn : TextView
     lateinit var m_fix_btn : TextView
 
+    fun getTodayRecord() : RecordOfDay {
+        val mPrefs = getSharedPreferences("record", MODE_PRIVATE)
+        val json_retrive = mPrefs.getString("all_record", "")
+        val obj: RecordOfDay = Gson().fromJson(json_retrive, RecordOfDay::class.java)
+        return obj
+    }
+
+    fun saveTodayRecord() {
+        val mPrefs = getSharedPreferences("record", MODE_PRIVATE)
+        val prefsEditor  = mPrefs.edit()
+        val gson = Gson()
+        val json_saving = gson.toJson(m_today_record)
+        prefsEditor.putString("all_record", json_saving)
+        prefsEditor.commit()
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,19 +64,37 @@ class WorkOutMainActivity : AppCompatActivity() {
         setViewItemBinding()
         setInitProperty()
         setListener()
+        updateViewItems()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        saveTodayRecord()
     }
 
     fun updateFocusedRecord() {
         m_focusedItem = m_today_workout[m_focus_toptab]
     }
 
-    fun setInitProperty() {
-        m_today_record = RecordOfDay(LocalDate.now(), Vector<WO_Record>())
-        var listOfType : MutableList<String> = mutableListOf("턱걸이", "푸시업", "달라기")
-        for (item in listOfType) {
-            m_today_record.listOfRecord.add(WO_Record(item, 0, 0))
+    fun initProperty_TodayRecord() {
+        var todayRecord = getTodayRecord()
+
+        if (todayRecord.IsEmpty()) {
+            m_today_record = RecordOfDay(LocalDate.now(), Vector<WO_Record>())
+            var listOfType : MutableList<String> = mutableListOf("턱걸이", "푸시업", "달라기")
+            for (item in listOfType) {
+                m_today_record.listOfRecord.add(WO_Record(item, 0, 0))
+            }
+        }
+        else {
+            m_today_record = todayRecord
         }
         m_today_workout = m_today_record.listOfRecord
+    }
+
+
+    fun setInitProperty() {
+        initProperty_TodayRecord()
         updateFocusedRecord()
     }
 
