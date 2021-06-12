@@ -12,7 +12,6 @@ import com.google.gson.Gson
 import java.time.LocalDate
 import java.util.*
 
-
 class WorkOutMainActivity : AppCompatActivity() {
 
     lateinit var m_today_record : RecordOfDay
@@ -41,11 +40,16 @@ class WorkOutMainActivity : AppCompatActivity() {
     lateinit var m_add_btn : TextView
     lateinit var m_fix_btn : TextView
 
-    fun getTodayRecord() : RecordOfDay {
+    fun getTodayRecord() : RecordOfDay? {
+        var record: RecordOfDay?
         val mPrefs = getSharedPreferences("record", MODE_PRIVATE)
-        val json_retrive = mPrefs.getString("all_record", "")
-        val obj: RecordOfDay = Gson().fromJson(json_retrive, RecordOfDay::class.java)
-        return obj
+        val json = mPrefs.getString("todayRecord", "")
+        record = try {
+            Gson().fromJson(json, RecordOfDay::class.java)
+        } catch (e : Exception){
+            null
+        }
+        return record
     }
 
     fun saveTodayRecord() {
@@ -53,10 +57,9 @@ class WorkOutMainActivity : AppCompatActivity() {
         val prefsEditor  = mPrefs.edit()
         val gson = Gson()
         val json_saving = gson.toJson(m_today_record)
-        prefsEditor.putString("all_record", json_saving)
+        prefsEditor.putString("todayRecord", json_saving)
         prefsEditor.commit()
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,17 +81,18 @@ class WorkOutMainActivity : AppCompatActivity() {
 
     fun initProperty_TodayRecord() {
         var todayRecord = getTodayRecord()
-
-        if (todayRecord.IsEmpty()) {
+        if (todayRecord != null) {
+            m_today_record = todayRecord
+        }
+        else {
+            // Initialize today record
             m_today_record = RecordOfDay(LocalDate.now(), Vector<WO_Record>())
             var listOfType : MutableList<String> = mutableListOf("턱걸이", "푸시업", "달라기")
             for (item in listOfType) {
                 m_today_record.listOfRecord.add(WO_Record(item, 0, 0))
             }
         }
-        else {
-            m_today_record = todayRecord
-        }
+        // set reference for workout record
         m_today_workout = m_today_record.listOfRecord
     }
 
