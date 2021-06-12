@@ -58,7 +58,7 @@ class WorkOutMainActivity : AppCompatActivity() {
         val gson = Gson()
         val json_saving = gson.toJson(m_today_record)
         prefsEditor.putString("todayRecord", json_saving)
-        prefsEditor.commit()
+        prefsEditor.apply()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,10 +70,11 @@ class WorkOutMainActivity : AppCompatActivity() {
         updateViewItems()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
         saveTodayRecord()
     }
+
 
     fun updateFocusedRecord() {
         m_focusedItem = m_today_workout[m_focus_toptab]
