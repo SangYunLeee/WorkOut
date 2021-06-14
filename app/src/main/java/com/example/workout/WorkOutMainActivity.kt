@@ -1,26 +1,25 @@
 package com.example.workout
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.workout.DataType.RecordOfDay
 import com.example.workout.DataType.WO_Record
 import com.example.workout.helper.Helper
-import com.google.gson.Gson
 import java.time.LocalDate
 import java.util.*
 
-class WorkOutMainActivity : AppCompatActivity() {
 
+
+class WorkOutMainActivity : AppCompatActivity() {
+    var m_all_record : MutableMap<String, RecordOfDay>? = null
     lateinit var m_today_record : RecordOfDay
     lateinit var m_today_workout : Vector<WO_Record>
     lateinit var m_focusedItem : WO_Record
 
     var m_input_number : Int = 0
     var m_focus_toptab : Int = 0
-
 
     // VIEW ITEM
     lateinit var m_toptab_1 : TextView
@@ -41,24 +40,27 @@ class WorkOutMainActivity : AppCompatActivity() {
     lateinit var m_fix_btn : TextView
 
     fun getTodayRecord() : RecordOfDay? {
-        var record: RecordOfDay?
-        val mPrefs = getSharedPreferences("record", MODE_PRIVATE)
-        val json = mPrefs.getString("todayRecord", "")
-        record = try {
-            Gson().fromJson(json, RecordOfDay::class.java)
-        } catch (e : Exception){
-            null
-        }
-        return record
+        var allDayRecord : MutableMap<String, RecordOfDay>? = getAllDayRecord()
+        var today = LocalDate.now().toString()
+        return allDayRecord?.get(today)
     }
 
-    fun saveTodayRecord() {
-        val mPrefs = getSharedPreferences("record", MODE_PRIVATE)
-        val prefsEditor  = mPrefs.edit()
-        val gson = Gson()
-        val json_saving = gson.toJson(m_today_record)
-        prefsEditor.putString("todayRecord", json_saving)
-        prefsEditor.apply()
+    fun getTodayRecordFromRunTime() : RecordOfDay? {
+        var current = LocalDate.now().toString()
+        return m_all_record?.get(current)
+    }
+
+    fun getAllDayRecord() : MutableMap<String, RecordOfDay>? {
+        return Helper.getFromSP("AllDayRecord", "record", this)
+    }
+
+    fun saveAllDayRecord(){
+        Helper.saveAtSP(m_all_record, "AllDayRecord", "record", this)
+    }
+
+    fun updateAllDayRecord(){
+        var today = LocalDate.now().toString()
+        m_all_record?.put(today, m_today_record)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,18 +72,14 @@ class WorkOutMainActivity : AppCompatActivity() {
         updateViewItems()
     }
 
-    override fun onPause() {
-        super.onPause()
-        saveTodayRecord()
+    fun rePointingFocusedRecord(focusedTab : Int = 0) {
+        m_focus_toptab = focusedTab
+        m_focusedItem = m_today_workout[focusedTab]
     }
 
-
-    fun updateFocusedRecord() {
-        m_focusedItem = m_today_workout[m_focus_toptab]
-    }
-
-    fun initProperty_TodayRecord() {
-        var todayRecord = getTodayRecord()
+    fun updateTodayRecord() {
+        m_all_record = getAllDayRecord()
+        var todayRecord = getTodayRecordFromRunTime()
         if (todayRecord != null) {
             m_today_record = todayRecord
         }
@@ -97,10 +95,9 @@ class WorkOutMainActivity : AppCompatActivity() {
         m_today_workout = m_today_record.listOfRecord
     }
 
-
     fun setInitProperty() {
-        initProperty_TodayRecord()
-        updateFocusedRecord()
+        updateTodayRecord()
+        rePointingFocusedRecord()
     }
 
     fun setViewItemBinding() {
@@ -123,35 +120,19 @@ class WorkOutMainActivity : AppCompatActivity() {
     }
 
     fun setListener() {
-
-        val focus_color = ContextCompat.getColor(this, R.color._light_green)
-        val normal_color = ContextCompat.getColor(this, R.color.beige)
-
     // TOP_TAB
         m_toptab_1.setOnClickListener { button ->
-            m_focus_toptab = 0
-            updateFocusedRecord()
-            button.setBackgroundColor(focus_color)
-            m_toptab_2.setBackgroundColor(normal_color)
-            m_toptab_3.setBackgroundColor(normal_color)
+            changeTopTab(0)
             updateViewItems()
         }
 
         m_toptab_2.setOnClickListener { button ->
-            m_focus_toptab = 1
-            updateFocusedRecord()
-            button.setBackgroundColor(focus_color)
-            m_toptab_1.setBackgroundColor(normal_color)
-            m_toptab_3.setBackgroundColor(normal_color)
+            changeTopTab(1)
             updateViewItems()
         }
 
         m_toptab_3.setOnClickListener{ button->
-            m_focus_toptab = 2
-            updateFocusedRecord()
-            button.setBackgroundColor(focus_color)
-            m_toptab_1.setBackgroundColor(normal_color)
-            m_toptab_2.setBackgroundColor(normal_color)
+            changeTopTab(2)
             updateViewItems()
         }
     // ADD NUMBER
@@ -179,6 +160,9 @@ class WorkOutMainActivity : AppCompatActivity() {
                 sum += m_input_number
             }
             m_input_number = 0
+
+            updateAllDayRecord()
+            saveAllDayRecord()
             updateViewItems()
         }
     }
@@ -204,4 +188,33 @@ class WorkOutMainActivity : AppCompatActivity() {
         m_avg.setText( avg.toString() )
         m_input_text.setText(m_input_number.toString())
     }
+
+    fun changeTopTab(focus : Int) {
+        // change properties
+        rePointingFocusedRecord(focus)
+        // change view's items
+        changeTopTabView(focus)
+    }
+
+    fun changeTopTabView(focus : Int) {
+        val focus_color = ContextCompat.getColor(this, R.color._light_green)
+        val normal_color = ContextCompat.getColor(this, R.color.beige)
+
+        m_toptab_1.setBackgroundColor(normal_color)
+        m_toptab_2.setBackgroundColor(normal_color)
+        m_toptab_3.setBackgroundColor(normal_color)
+
+        var focusedTab : TextView? = when (focus) {
+            0 -> m_toptab_1
+            1 -> m_toptab_2
+            2 -> m_toptab_3
+            else -> null
+        }
+
+        focusedTab?.setBackgroundColor(focus_color)
+
+
+    }
+
+
 }

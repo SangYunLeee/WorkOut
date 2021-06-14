@@ -8,4 +8,15 @@ class WO_Record (
     var type : String,
     var sum : Int,
     var cnt : Int
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is WO_Record) return false
+
+        if (type != other.type) return false
+        if (sum != other.sum) return false
+        if (cnt != other.cnt) return false
+
+        return true
+    }
+}

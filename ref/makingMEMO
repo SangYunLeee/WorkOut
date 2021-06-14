@@ -1,0 +1,14 @@
+
+
+
+1. onInit
+	- Get AllDayRC From SP
+	- Get ToDayRC From AllDayRC
+	- Set Local Alias RC Variant
+
+
+2. SP 업데이트 타이밍
+	- 값이 변경되었을 때
+		- 변경 비교 대상 : Local Variant
+
+바라보는 
