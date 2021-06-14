@@ -10,7 +10,11 @@ import com.example.workout.helper.Helper
 import java.time.LocalDate
 import java.util.*
 
-
+// FUNCTION NAME DEFINITION
+    // SP -> Local : pull*FromSP
+    // SP <- Local : push*ToSP
+    // View -> Local : localize*
+    // View <- Local : updateView*
 
 class WorkOutMainActivity : AppCompatActivity() {
     var m_all_record : MutableMap<String, RecordOfDay>? = null
@@ -54,11 +58,11 @@ class WorkOutMainActivity : AppCompatActivity() {
         return Helper.getFromSP("AllDayRecord", "record", this)
     }
 
-    fun saveAllDayRecord(){
-        Helper.saveAtSP(m_all_record, "AllDayRecord", "record", this)
+    fun pushAllDayRecordToSP(){
+        Helper.pushToSP(m_all_record, "AllDayRecord", "record", this)
     }
 
-    fun updateAllDayRecord(){
+    fun localizeAllDayRecord(){
         var today = LocalDate.now().toString()
         m_all_record?.put(today, m_today_record)
     }
@@ -77,7 +81,7 @@ class WorkOutMainActivity : AppCompatActivity() {
         m_focusedItem = m_today_workout[focusedTab]
     }
 
-    fun updateTodayRecord() {
+    fun pullRecordFromSP() {
         m_all_record = getAllDayRecord()
         var todayRecord = getTodayRecordFromRunTime()
         if (todayRecord != null) {
@@ -96,7 +100,7 @@ class WorkOutMainActivity : AppCompatActivity() {
     }
 
     fun setInitProperty() {
-        updateTodayRecord()
+        pullRecordFromSP()
         rePointingFocusedRecord()
     }
 
@@ -161,8 +165,8 @@ class WorkOutMainActivity : AppCompatActivity() {
             }
             m_input_number = 0
 
-            updateAllDayRecord()
-            saveAllDayRecord()
+            localizeAllDayRecord()
+            pushAllDayRecordToSP()
             updateViewItems()
         }
     }
@@ -193,28 +197,22 @@ class WorkOutMainActivity : AppCompatActivity() {
         // change properties
         rePointingFocusedRecord(focus)
         // change view's items
-        changeTopTabView(focus)
+        updateViewTopTab(focus)
     }
 
-    fun changeTopTabView(focus : Int) {
+    fun updateViewTopTab(focus : Int) {
         val focus_color = ContextCompat.getColor(this, R.color._light_green)
         val normal_color = ContextCompat.getColor(this, R.color.beige)
 
         m_toptab_1.setBackgroundColor(normal_color)
         m_toptab_2.setBackgroundColor(normal_color)
         m_toptab_3.setBackgroundColor(normal_color)
-
         var focusedTab : TextView? = when (focus) {
             0 -> m_toptab_1
             1 -> m_toptab_2
             2 -> m_toptab_3
             else -> null
         }
-
         focusedTab?.setBackgroundColor(focus_color)
-
-
     }
-
-
 }

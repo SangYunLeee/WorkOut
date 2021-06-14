@@ -23,7 +23,7 @@ class Helper {
             return df.format(number).toDouble()
         }
 
-        fun saveAtSP( value : Any?, key : String, storageName : String, context : Context) {
+        fun pushToSP(value : Any?, key : String, storageName : String, context : Context) {
             val prefs = context.getSharedPreferences(storageName, AppCompatActivity.MODE_PRIVATE)
             val prefsEditor  = prefs.edit()
             val gson = Gson()
