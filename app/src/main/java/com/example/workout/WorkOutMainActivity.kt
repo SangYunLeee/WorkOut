@@ -44,6 +44,7 @@ class WorkOutMainActivity : AppCompatActivity() {
     lateinit var m_add_btn : TextView
     lateinit var m_fix_btn : TextView
     lateinit var m_log_btn : TextView
+    lateinit var m_delete_today_btn : TextView
 
     fun getTodayRecord() : RecordOfDay? {
         var allDayRecord : MutableMap<String, RecordOfDay>? = getAllDayRecord()
@@ -125,6 +126,7 @@ class WorkOutMainActivity : AppCompatActivity() {
         m_add_btn = findViewById<TextView>(R.id.add_btn)
         m_fix_btn = findViewById<TextView>(R.id.fix_btn)
         m_log_btn = findViewById<TextView>(R.id.log_btn)
+        m_delete_today_btn = findViewById<TextView>(R.id.delete_today_workout)
     }
 
     fun setListener() {
@@ -183,6 +185,18 @@ class WorkOutMainActivity : AppCompatActivity() {
         m_log_btn.setOnClickListener {
             val intent = Intent(this, WorkOutDetailListActivity::class.java)
             startActivity(intent)
+        }
+
+        m_delete_today_btn.setOnClickListener {
+            m_today_workout.clear()
+            var listOfType : MutableList<String> = mutableListOf("턱걸이", "푸시업", "달라기")
+            for (item in listOfType) {
+                m_today_workout.add(WO_Record(item, 0, 0))
+            }
+            pushAllDayRecordToSP()
+            rePointingFocusedRecord()
+            updateViewItems()
+            updateViewTopTab()
         }
     }
 

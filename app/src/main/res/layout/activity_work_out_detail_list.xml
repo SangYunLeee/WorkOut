@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="500sp"
         android:orientation="vertical"
-        android:divider="@drawable/divider"
+        android:divider="@drawable/divider_for_vertical"
         android:showDividers="end|middle|beginning"
         >
 

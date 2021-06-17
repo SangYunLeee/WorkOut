@@ -10,17 +10,28 @@
     android:background="@color/basil_ivory_50"
     >
     <TextView
-        android:layout_marginTop="35sp"
+        android:id="@+id/delete_today_workout"
+        android:layout_marginTop="5sp"
+        android:layout_marginRight="15sp"
+        android:layout_width="150sp"
+        android:layout_height="30sp"
+        android:layout_gravity="right"
+        android:text="오늘 운동 기록 지우기"
+        android:gravity="center"
+        android:background="#C9FFF4"
+        />
+    <TextView
+        android:layout_marginTop="25sp"
         android:layout_width="match_parent"
         android:layout_height="40sp"
-        android:text="운동 기록기 ( ^.^ )"
+        android:text="운동 하즈아"
         android:gravity="center"
         android:layout_gravity="center"
         android:textSize="30sp"
         android:textColor="@color/basil_orange_800"
         />
     <LinearLayout
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="5sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -30,7 +41,11 @@
         <LinearLayout
             android:id="@+id/topTab"
             android:layout_width="match_parent"
-            android:layout_height="70dp">
+            android:layout_height="75dp"
+            android:padding="13sp"
+            android:divider="@drawable/divider_for_horizontal"
+            android:showDividers="middle"
+            >
             <TextView
                 android:id="@+id/toptab_1"
                 style="@style/topTab"
@@ -39,7 +54,6 @@
                 android:layout_width="0dp"
                 android:background="@color/_light_green"
                 android:text="@string/top_tab_1"/>
-
             <TextView
                 android:id="@+id/toptab_2"
                 style="@style/topTab"
@@ -48,7 +62,6 @@
                 android:layout_width="0dp"
                 android:background="@color/beige"
                 android:text="@string/top_tab_2"/>
-
             <TextView
                 android:id="@+id/toptab_3"
                 style="@style/topTab"
