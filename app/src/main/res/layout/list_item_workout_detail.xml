@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layout_margin="5sp"
+    android:background="@color/pale_goldenrod"
+    >
+
+    <TextView
+        android:id="@+id/workout_date"
+        android:layout_width="100sp"
+        android:layout_height="50sp"
+        android:layout_weight="1"
+        android:text="Date"
+        android:gravity="center"
+        style="@style/detail_item_item"
+    />
+
+    <TextView
+        android:id="@+id/workout_item_of_tap1"
+        android:layout_width="100sp"
+        android:layout_height="50sp"
+        android:layout_weight="1"
+        android:text="턱걸이 개수"
+        android:gravity="center"
+        style="@style/detail_item_item"
+    />
+
+    <TextView
+        android:id="@+id/workout_item_of_tap2"
+        android:layout_width="100sp"
+        android:layout_height="50sp"
+        android:layout_weight="1"
+        android:text="푸시업 개수"
+        android:gravity="center"
+        style="@style/detail_item_item"
+        />
+
+    <TextView
+        android:id="@+id/workout_item_of_tap3"
+        android:layout_width="100sp"
+        android:layout_height="50sp"
+        android:layout_weight="1"
+        android:text="달리기 개수"
+        android:gravity="center"
+        style="@style/detail_item_item"
+        />
+
+</LinearLayout>

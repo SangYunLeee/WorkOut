@@ -147,4 +147,13 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+
+    <!--BASIL THEME-->
+    <color name="basil_green_800">#356859</color>
+    <color name="basil_green_500">#37966f</color>
+    <color name="basil_green_100">#b9e4c9</color>
+    <color name="basil_orange_800">#fd5523</color>
+    <color name="basil_ivory_50">#fffbe6</color>
+
+
 </resources>

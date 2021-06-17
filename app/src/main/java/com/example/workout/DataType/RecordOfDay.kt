@@ -3,7 +3,7 @@ import java.time.LocalDate
 import java.util.*
 
 class RecordOfDay(
-     var date : LocalDate,
+     var date : String,
      var listOfRecord : Vector<WO_Record>
 ){
      override fun equals(other: Any?): Boolean {

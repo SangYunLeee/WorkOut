@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="detail_item_tab">
+        <item name="android:textSize">24sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white_smoke</item>
+        <item name="android:background">#232f34</item>
+    </style>
+
+    <style name="detail_item_item">
+        <item name="android:textSize">24sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white_smoke</item>
+        <item name="android:background">#344955</item>
+    </style>
+</resources>
+
+<!--4a6572-->
+<!--344955-->

@@ -1,5 +1,6 @@
 package com.example.workout
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +18,7 @@ import java.util.*
     // View <- Local : updateView*
 
 class WorkOutMainActivity : AppCompatActivity() {
-    var m_all_record : MutableMap<String, RecordOfDay>? = null
+    var m_all_record : MutableMap<String, RecordOfDay> = mutableMapOf<String, RecordOfDay>()
     lateinit var m_today_record : RecordOfDay
     lateinit var m_today_workout : Vector<WO_Record>
     lateinit var m_focusedItem : WO_Record
@@ -42,6 +43,7 @@ class WorkOutMainActivity : AppCompatActivity() {
 
     lateinit var m_add_btn : TextView
     lateinit var m_fix_btn : TextView
+    lateinit var m_log_btn : TextView
 
     fun getTodayRecord() : RecordOfDay? {
         var allDayRecord : MutableMap<String, RecordOfDay>? = getAllDayRecord()
@@ -51,7 +53,7 @@ class WorkOutMainActivity : AppCompatActivity() {
 
     fun getTodayRecordFromRunTime() : RecordOfDay? {
         var current = LocalDate.now().toString()
-        return m_all_record?.get(current)
+        return m_all_record.get(current) ?: null
     }
 
     fun getAllDayRecord() : MutableMap<String, RecordOfDay>? {
@@ -64,7 +66,7 @@ class WorkOutMainActivity : AppCompatActivity() {
 
     fun localizeAllDayRecord(){
         var today = LocalDate.now().toString()
-        m_all_record?.put(today, m_today_record)
+        m_all_record[today] = m_today_record
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,6 +76,7 @@ class WorkOutMainActivity : AppCompatActivity() {
         setInitProperty()
         setListener()
         updateViewItems()
+        updateViewTopTab()
     }
 
     fun rePointingFocusedRecord(focusedTab : Int = 0) {
@@ -82,14 +85,14 @@ class WorkOutMainActivity : AppCompatActivity() {
     }
 
     fun pullRecordFromSP() {
-        m_all_record = getAllDayRecord()
+        m_all_record = getAllDayRecord()?: mutableMapOf()
         var todayRecord = getTodayRecordFromRunTime()
         if (todayRecord != null) {
             m_today_record = todayRecord
         }
         else {
             // Initialize today record
-            m_today_record = RecordOfDay(LocalDate.now(), Vector<WO_Record>())
+            m_today_record = RecordOfDay(LocalDate.now().toString(), Vector<WO_Record>())
             var listOfType : MutableList<String> = mutableListOf("턱걸이", "푸시업", "달라기")
             for (item in listOfType) {
                 m_today_record.listOfRecord.add(WO_Record(item, 0, 0))
@@ -121,21 +124,22 @@ class WorkOutMainActivity : AppCompatActivity() {
 
         m_add_btn = findViewById<TextView>(R.id.add_btn)
         m_fix_btn = findViewById<TextView>(R.id.fix_btn)
+        m_log_btn = findViewById<TextView>(R.id.log_btn)
     }
 
     fun setListener() {
     // TOP_TAB
-        m_toptab_1.setOnClickListener { button ->
+        m_toptab_1.setOnClickListener {
             changeTopTab(0)
             updateViewItems()
         }
 
-        m_toptab_2.setOnClickListener { button ->
+        m_toptab_2.setOnClickListener {
             changeTopTab(1)
             updateViewItems()
         }
 
-        m_toptab_3.setOnClickListener{ button->
+        m_toptab_3.setOnClickListener{
             changeTopTab(2)
             updateViewItems()
         }
@@ -169,17 +173,24 @@ class WorkOutMainActivity : AppCompatActivity() {
             pushAllDayRecordToSP()
             updateViewItems()
         }
+
+        m_fix_btn.setOnClickListener {
+            // reset input text
+            m_input_number = 0
+            m_input_text.setText(m_input_number.toString())
+        }
+
+        m_log_btn.setOnClickListener {
+            val intent = Intent(this, WorkOutDetailListActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     fun updateViewItems () {
-        var sum     : Int    = 0
-        var avg     : Double = 0.0
-        var cnt     : Int    = 0
-
         // 포커스된 아이템에 대한 정보를 가져온다.
-        sum = m_focusedItem.sum
-        cnt = m_focusedItem.cnt
-        avg = m_focusedItem.sum.toDouble() / m_focusedItem.cnt
+        var sum  = m_focusedItem.sum
+        var cnt  = m_focusedItem.cnt
+        var avg  = m_focusedItem.sum.toDouble() / m_focusedItem.cnt
 
         // 평균값을 소수점 첫째자리로 변경
         if (avg.isNaN())
@@ -200,19 +211,35 @@ class WorkOutMainActivity : AppCompatActivity() {
         updateViewTopTab(focus)
     }
 
-    fun updateViewTopTab(focus : Int) {
-        val focus_color = ContextCompat.getColor(this, R.color._light_green)
-        val normal_color = ContextCompat.getColor(this, R.color.beige)
+    fun updateViewTopTab(focus : Int = 0) {
+        val focus_color = ContextCompat.getColor(this, R.color.basil_green_500)
+        val normal_color = ContextCompat.getColor(this, R.color.basil_green_100)
 
-        m_toptab_1.setBackgroundColor(normal_color)
-        m_toptab_2.setBackgroundColor(normal_color)
-        m_toptab_3.setBackgroundColor(normal_color)
+        val focus_text_color = ContextCompat.getColor(this, R.color.white_smoke)
+        val normal_text_color = ContextCompat.getColor(this, R.color.dim_gray)
+
+
+        m_toptab_1.apply {
+            setBackgroundColor(normal_color)
+            setTextColor(normal_text_color)
+        }
+        m_toptab_2.apply {
+            setBackgroundColor(normal_color)
+            setTextColor(normal_text_color)
+        }
+        m_toptab_3.apply {
+            setBackgroundColor(normal_color)
+            setTextColor(normal_text_color)
+        }
         var focusedTab : TextView? = when (focus) {
             0 -> m_toptab_1
             1 -> m_toptab_2
             2 -> m_toptab_3
             else -> null
         }
-        focusedTab?.setBackgroundColor(focus_color)
+        focusedTab?.apply {
+            setBackgroundColor(focus_color)
+            setTextColor(focus_text_color)
+        }
     }
 }
