@@ -77,14 +77,15 @@ class WorkOutMainActivity : AppCompatActivity() {
         setInitProperty()
         setListener()
         updateViewItems()
-        updateViewTopTab()
     }
 
     override fun onResume() {
         super.onResume()
-        setInitProperty()
+        //property update
+        setResumeProperty()
+        // View update
         updateViewItems()
-        updateViewTopTab()
+        updateViewTopTab(m_focus_toptab)
     }
 
     fun rePointingFocusedRecord(focusedTab : Int = 0) {
@@ -113,6 +114,10 @@ class WorkOutMainActivity : AppCompatActivity() {
     fun setInitProperty() {
         pullRecordFromSP()
         rePointingFocusedRecord()
+    }
+
+    fun setResumeProperty() {
+        pullRecordFromSP()
     }
 
     fun setViewItemBinding() {
