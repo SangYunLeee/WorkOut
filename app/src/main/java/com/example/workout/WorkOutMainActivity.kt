@@ -102,7 +102,7 @@ class WorkOutMainActivity : AppCompatActivity() {
         else {
             // Initialize today record
             m_today_record = RecordOfDay(LocalDate.now().toString(), Vector<WO_Record>())
-            var listOfType : MutableList<String> = mutableListOf("턱걸이", "푸시업", "달라기")
+            var listOfType : MutableList<String> = mutableListOf("턱걸이", "푸시업", "스쿼트")
             for (item in listOfType) {
                 m_today_record.listOfRecord.add(WO_Record(item, 0, 0))
             }
@@ -118,6 +118,7 @@ class WorkOutMainActivity : AppCompatActivity() {
 
     fun setResumeProperty() {
         pullRecordFromSP()
+        rePointingFocusedRecord(m_focus_toptab)
     }
 
     fun setViewItemBinding() {
@@ -201,14 +202,14 @@ class WorkOutMainActivity : AppCompatActivity() {
 
         m_delete_today_btn.setOnClickListener {
             m_today_workout.clear()
-            var listOfType : MutableList<String> = mutableListOf("턱걸이", "푸시업", "달라기")
+            var listOfType : MutableList<String> = mutableListOf("턱걸이", "푸시업", "스쿼트")
             for (item in listOfType) {
                 m_today_workout.add(WO_Record(item, 0, 0))
             }
             pushAllDayRecordToSP()
-            rePointingFocusedRecord()
+            rePointingFocusedRecord(m_focus_toptab)
             updateViewItems()
-            updateViewTopTab()
+            updateViewTopTab(m_focus_toptab)
         }
     }
 
