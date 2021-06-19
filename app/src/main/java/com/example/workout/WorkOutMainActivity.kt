@@ -236,6 +236,7 @@ class WorkOutMainActivity : AppCompatActivity() {
         m_toptab_1.apply {
             setBackgroundColor(normal_color)
             setTextColor(normal_text_color)
+
         }
         m_toptab_2.apply {
             setBackgroundColor(normal_color)

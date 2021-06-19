@@ -20,17 +20,25 @@ class WorkOutDetailListActivity : AppCompatActivity() {
         var container = findViewById<LinearLayout>(R.id.workout_container)
 
         m_allDayRecord = getAllDayRecord() ?: mutableMapOf()
-        for ( item in m_allDayRecord ) {
+        for ( item_all in m_allDayRecord ) {
+            var sum = 0
+            // if item_all has sum number, then insert
+            val list =  item_all.value.listOfRecord
+            for(item in list)
+                sum += item.sum
+            if (sum == 0 && item_all.key != LocalDate.now().toString())
+                continue
+            // item_all insert
             var itemView =  layoutInflater.inflate(R.layout.list_item_workout_detail, null)
             var dateView =  itemView.findViewById<TextView>(R.id.workout_date)
             var tab1View =  itemView.findViewById<TextView>(R.id.workout_item_of_tap1)
             var tab2View =  itemView.findViewById<TextView>(R.id.workout_item_of_tap2)
             var tab3View =  itemView.findViewById<TextView>(R.id.workout_item_of_tap3)
 
-            tab1View.setText(item.value.listOfRecord[0].sum.toString())
-            tab2View.setText(item.value.listOfRecord[1].sum.toString())
-            tab3View.setText(item.value.listOfRecord[2].sum.toString())
-            var date  =  LocalDate.parse(item.value.date,
+            tab1View.setText(item_all.value.listOfRecord[0].sum.toString())
+            tab2View.setText(item_all.value.listOfRecord[1].sum.toString())
+            tab3View.setText(item_all.value.listOfRecord[2].sum.toString())
+            var date  =  LocalDate.parse(item_all.value.date,
                 DateTimeFormatter.ofPattern("yyyy-MM-dd"))
             dateView.setText(""+date.monthValue + "-" + date.dayOfMonth)
 
