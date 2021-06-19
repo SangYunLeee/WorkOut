@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:layout_margin="5sp"
-    android:background="@color/basil_ivory_50"
     >
 
     <TextView
@@ -46,5 +44,25 @@
         android:gravity="center"
         style="@style/detail_item_item"
         />
+
+    <RelativeLayout
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        >
+        <ImageView
+            android:id="@+id/workout_item_of_tap4"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:gravity="center"
+            style="@style/detail_item_item"
+            android:layout_gravity="center"/>
+        <ImageView
+            android:src="@drawable/trash_bin"
+            android:layout_width="50sp"
+            android:layout_height="38sp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
 
 </LinearLayout>

@@ -80,6 +80,13 @@ class WorkOutMainActivity : AppCompatActivity() {
         updateViewTopTab()
     }
 
+    override fun onResume() {
+        super.onResume()
+        setInitProperty()
+        updateViewItems()
+        updateViewTopTab()
+    }
+
     fun rePointingFocusedRecord(focusedTab : Int = 0) {
         m_focus_toptab = focusedTab
         m_focusedItem = m_today_workout[focusedTab]
