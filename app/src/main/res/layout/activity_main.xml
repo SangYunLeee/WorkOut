@@ -248,4 +248,14 @@
 
 
     </LinearLayout>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/bottom_tab"
+        android:name="com.example.workout.fragment.BottomTabFragment"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_alignParentBottom="true"
+
+    />
+
+
 </RelativeLayout>

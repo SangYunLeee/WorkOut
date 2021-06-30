@@ -54,7 +54,7 @@ class WorkOutMainActivity : AppCompatActivity() {
 
     fun getTodayRecordFromRunTime() : RecordOfDay? {
         var current = LocalDate.now().toString()
-        return m_all_record.get(current) ?: null
+        return m_all_record.get(current)
     }
 
     fun getAllDayRecord() : MutableMap<String, RecordOfDay>? {
