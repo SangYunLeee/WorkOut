@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BodyCheckMainActivity"
+    android:background="@color/powder_blue"
+    >
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="28dp"
+        android:layout_marginHorizontal="5dp"
+        android:background="@color/azure"
+        />
+
+    <TextView
+        android:id="@+id/btn_load_img"
+        android:layout_width="140dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/antique_white"
+        android:gravity="center"
+        android:text="사진 불러오기"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/btn_load_img"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:gravity="center"
+            android:text="몸무게: "
+            android:textSize="20sp"
+            android:layout_marginRight="5dp"
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/weightInput"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:hint="ex) 70.5"
+            android:inputType="numberDecimal"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="kg"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/bottom_tab"
+        android:name="com.example.workout.fragment.BottomTabFragment"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_alignParentBottom="true"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout="@layout/fragment_bottom_tab" />
+
+    <Button
+        android:id="@+id/btn_record_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="기록하기"
+        android:textSize="20dp"
+        android:background="@color/dark_sea_green"
+        android:textColor="@color/honeydew"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_tab"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

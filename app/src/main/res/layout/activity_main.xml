@@ -165,7 +165,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20sp"
-
                 >
 
                 <TextView
@@ -234,11 +233,12 @@
 
 
     </LinearLayout>
+
     <TextView
         android:id="@+id/log_btn"
         android:layout_width="120sp"
         android:layout_height="40sp"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/bottom_tab"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20sp"
         android:background="#344955"
@@ -246,4 +246,13 @@
         android:text="전체 기록"
         android:textColor="@color/white_smoke"
         android:textSize="24sp" />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/bottom_tab"
+        android:name="com.example.workout.fragment.BottomTabFragment"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_alignParentBottom="true"
+
+        tools:layout="@layout/fragment_bottom_tab"
+    />
 </RelativeLayout>

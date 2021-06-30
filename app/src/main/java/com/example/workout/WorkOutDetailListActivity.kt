@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter
 
 class WorkOutDetailListActivity : AppCompatActivity() {
 
-    lateinit var m_allDayRecord : MutableMap<String, RecordOfDay>
+    private lateinit var _allDayRecord : MutableMap<String, RecordOfDay>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,8 +20,8 @@ class WorkOutDetailListActivity : AppCompatActivity() {
 
         var container = findViewById<LinearLayout>(R.id.workout_container)
 
-        m_allDayRecord = getAllDayRecord() ?: mutableMapOf()
-        for ( record in m_allDayRecord ) {
+        _allDayRecord = getAllDayRecord() ?: mutableMapOf()
+        for ( record in _allDayRecord ) {
             var sum = 0
             // if record has sum number, then insert
             val list =  record.value.listOfRecord
@@ -38,12 +38,12 @@ class WorkOutDetailListActivity : AppCompatActivity() {
             var tab4View =  itemView.findViewById<ImageView>(R.id.workout_item_of_tap4)
 
 
-            tab1View.setText(record.value.listOfRecord[0].sum.toString())
-            tab2View.setText(record.value.listOfRecord[1].sum.toString())
-            tab3View.setText(record.value.listOfRecord[2].sum.toString())
+            tab1View.text = record.value.listOfRecord[0].sum.toString()
+            tab2View.text = record.value.listOfRecord[1].sum.toString()
+            tab3View.text = record.value.listOfRecord[2].sum.toString()
             var date  =  LocalDate.parse(record.value.date,
                 DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-            dateView.setText(""+date.monthValue + "-" + date.dayOfMonth)
+            dateView.text = ""+date.monthValue + "-" + date.dayOfMonth
 
             container.addView(itemView)
 
@@ -54,10 +54,10 @@ class WorkOutDetailListActivity : AppCompatActivity() {
                 record.value.listOfRecord[1].cnt = 0
                 record.value.listOfRecord[2].sum = 0
                 record.value.listOfRecord[2].cnt = 0
-                tab1View.setText("0")
-                tab2View.setText("0")
-                tab3View.setText("0")
-                pushAllDayRecordToSP(m_allDayRecord)
+                tab1View.text = "0"
+                tab2View.text = "0"
+                tab3View.text = "0"
+                pushAllDayRecordToSP(_allDayRecord)
             }
         }
     }

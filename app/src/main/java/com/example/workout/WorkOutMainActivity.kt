@@ -54,7 +54,7 @@ class WorkOutMainActivity : AppCompatActivity() {
 
     fun getTodayRecordFromRunTime() : RecordOfDay? {
         var current = LocalDate.now().toString()
-        return m_all_record.get(current) ?: null
+        return m_all_record.get(current)
     }
 
     fun getAllDayRecord() : MutableMap<String, RecordOfDay>? {
@@ -95,14 +95,14 @@ class WorkOutMainActivity : AppCompatActivity() {
 
     fun pullRecordFromSP() {
         m_all_record = getAllDayRecord()?: mutableMapOf()
-        var todayRecord = getTodayRecordFromRunTime()
+        val todayRecord = getTodayRecordFromRunTime()
         if (todayRecord != null) {
             m_today_record = todayRecord
         }
         else {
             // Initialize today record
             m_today_record = RecordOfDay(LocalDate.now().toString(), Vector<WO_Record>())
-            var listOfType : MutableList<String> = mutableListOf("턱걸이", "푸시업", "스쿼트")
+            val listOfType : MutableList<String> = mutableListOf("턱걸이", "푸시업", "스쿼트")
             for (item in listOfType) {
                 m_today_record.listOfRecord.add(WO_Record(item, 0, 0))
             }
@@ -161,17 +161,17 @@ class WorkOutMainActivity : AppCompatActivity() {
     // ADD NUMBER
         m_add_1.setOnClickListener {
             m_input_number += 1
-            m_input_text.setText(m_input_number.toString())
+            m_input_text.text = m_input_number.toString()
         }
 
         m_add_5.setOnClickListener {
             m_input_number += 5
-            m_input_text.setText(m_input_number.toString())
+            m_input_text.text = m_input_number.toString()
         }
 
         m_add_10.setOnClickListener {
             m_input_number += 10
-            m_input_text.setText(m_input_number.toString())
+            m_input_text.text = m_input_number.toString()
         }
 
     // ADD OR FIX

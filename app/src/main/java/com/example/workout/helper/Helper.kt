@@ -2,18 +2,11 @@ package com.example.workout.helper
 
 
 import android.content.Context
-import android.renderscript.Element
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import com.example.workout.DataType.RecordOfDay
-import com.example.workout.DataType.WO_Record
-import java.lang.reflect.Type
-import java.time.LocalDate
-import java.util.*
-
 
 class Helper {
     companion object {
