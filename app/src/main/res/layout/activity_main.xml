@@ -19,59 +19,64 @@
         android:gravity="center"
         android:background="#C9FFF4"
         />
+
     <TextView
         android:id="@+id/title_name"
-        android:layout_marginTop="25sp"
         android:layout_width="match_parent"
         android:layout_height="40sp"
-        android:layout_below="@id/delete_today_workout"
-        android:text="운동 하즈아"
-        android:gravity="center"
+        android:layout_below="@+id/delete_today_workout"
         android:layout_gravity="center"
-        android:textSize="30sp"
+        android:layout_marginTop="3dp"
+        android:gravity="center"
+        android:text="운동 하즈아"
         android:textColor="@color/basil_orange_800"
-        />
+        android:textSize="30sp" />
+
     <LinearLayout
-        android:layout_below="@id/title_name"
-        android:layout_marginTop="5sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_below="@id/title_name"
+        android:layout_marginTop="5sp"
         android:background="@color/basil_ivory_50"
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/topTab"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:padding="13sp"
+            android:layout_height="wrap_content"
             android:divider="@drawable/divider_for_horizontal"
-            android:showDividers="middle"
-            >
+            android:paddingHorizontal="13sp"
+            android:showDividers="middle">
+
             <TextView
                 android:id="@+id/toptab_1"
                 style="@style/topTab"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@color/_light_green"
-                android:text="@string/top_tab_1"/>
+                android:text="@string/top_tab_1"
+                android:textColor="#607D8B" />
+
             <TextView
                 android:id="@+id/toptab_2"
                 style="@style/topTab"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@color/beige"
-                android:text="@string/top_tab_2"/>
+                android:text="@string/top_tab_2"
+                android:textColor="#78909C" />
+
             <TextView
                 android:id="@+id/toptab_3"
                 style="@style/topTab"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@color/beige"
-                android:text="@string/top_tab_3"/>
+                android:text="@string/top_tab_3"
+                android:textColor="#78909C" />
         </LinearLayout>
 
         <TableLayout
@@ -80,50 +85,51 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/topTab"
             android:layout_marginHorizontal="70dp"
-            android:layout_marginTop="30dp"
-            >
+            android:layout_marginTop="30dp">
+
             <TableRow>
+
                 <TextView
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="평균"
-                    android:textSize="25sp"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    />
+                    android:textSize="25sp" />
+
                 <TextView
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="총합"
-                    android:textSize="25sp"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    />
+                    android:textSize="25sp" />
+
                 <TextView
-                    android:text="세트"
-                    android:textSize="25sp"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    />
+                    android:gravity="center"
+                    android:text="세트"
+                    android:textSize="25sp" />
             </TableRow>
+
             <TableRow>
+
                 <TextView
                     android:id="@+id/avg"
-                    android:text="0"
-                    android:textSize="25sp"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    />
+                    android:gravity="center"
+                    android:text="0"
+                    android:textSize="25sp" />
+
                 <TextView
                     android:id="@+id/sum"
-                    android:text="0"
-                    android:textSize="25sp"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    />
+                    android:gravity="center"
+                    android:text="0"
+                    android:textSize="25sp" />
+
                 <TextView
                     android:id="@+id/count"
-                    android:text="0"
-                    android:textSize="25sp"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    />
+                    android:gravity="center"
+                    android:text="0"
+                    android:textSize="25sp" />
             </TableRow>
         </TableLayout>
 
@@ -131,101 +137,99 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30sp"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_centerHorizontal="true"
-                >
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="100sp"
                     android:layout_height="30sp"
-                    android:text="넣은 숫자"
                     android:gravity="center"
-                    android:textSize="20sp"
-                    />
+                    android:text="넣은 숫자"
+                    android:textSize="20sp" />
+
                 <TextView
                     android:id="@+id/enter_number"
                     android:layout_width="100sp"
                     android:layout_height="30sp"
-                    android:text="0"
                     android:gravity="center"
-                    android:textSize="20sp"
-                    />
+                    android:text="0"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="20sp"
 
                 >
+
                 <TextView
                     android:id="@+id/add_10"
-                    android:layout_marginEnd="5sp"
                     android:layout_width="100sp"
                     android:layout_height="50sp"
-                    android:text="+10"
-                    android:gravity="center"
-                    android:textSize="30sp"
+                    android:layout_marginEnd="5sp"
                     android:background="@color/powder_blue"
-                    />
+                    android:gravity="center"
+                    android:text="+10"
+                    android:textSize="30sp" />
+
                 <TextView
                     android:id="@+id/add_5"
-                    android:layout_marginEnd="5sp"
                     android:layout_width="100sp"
                     android:layout_height="50sp"
-                    android:text="+5"
-                    android:gravity="center"
-                    android:textSize="30sp"
+                    android:layout_marginEnd="5sp"
                     android:background="@color/powder_blue"
-                    />
+                    android:gravity="center"
+                    android:text="+5"
+                    android:textSize="30sp" />
+
                 <TextView
                     android:id="@+id/add_1"
                     android:layout_width="100sp"
                     android:layout_height="50sp"
-                    android:text="+1"
-                    android:gravity="center"
-                    android:textSize="30sp"
                     android:background="@color/powder_blue"
-                    />
+                    android:gravity="center"
+                    android:text="+1"
+                    android:textSize="30sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="30sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="30sp"
                 android:orientation="horizontal"
 
                 >
+
                 <TextView
                     android:id="@+id/add_btn"
                     android:layout_width="85sp"
                     android:layout_height="45sp"
                     android:layout_gravity="center"
-                    android:textSize="30sp"
-                    android:text="추가"
-                    android:gravity="center"
                     android:layout_marginEnd="15sp"
                     android:background="@color/_light_green"
-                    />
+                    android:gravity="center"
+                    android:text="추가"
+                    android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/fix_btn"
                     android:layout_width="85sp"
                     android:layout_height="45sp"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textSize="30sp"
                     android:background="@drawable/rounded_red"
+                    android:gravity="center"
+                    android:text="정정"
                     android:textColor="@color/white_smoke"
-                    android:text="정정"/>
+                    android:textSize="30sp" />
 
             </LinearLayout>
 
@@ -235,16 +239,13 @@
                 android:layout_height="40sp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20sp"
-                android:text="전체 기록"
-                android:gravity="center"
-                android:textSize="24sp"
-                android:textColor="@color/white_smoke"
                 android:background="#344955"
-                />
+                android:gravity="center"
+                android:text="전체 기록"
+                android:textColor="@color/white_smoke"
+                android:textSize="24sp" />
 
         </LinearLayout>
-
-
 
 
     </LinearLayout>
