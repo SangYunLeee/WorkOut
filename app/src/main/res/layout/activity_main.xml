@@ -230,12 +230,10 @@
                     android:textSize="30sp" />
 
             </LinearLayout>
-
         </LinearLayout>
 
 
     </LinearLayout>
-
     <TextView
         android:id="@+id/log_btn"
         android:layout_width="120sp"
@@ -248,5 +246,4 @@
         android:text="전체 기록"
         android:textColor="@color/white_smoke"
         android:textSize="24sp" />
-
 </RelativeLayout>
